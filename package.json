@@ -4,7 +4,7 @@
   "description": "Javascript logging framework for NodeJS",
   "main": "lib/bragi.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test"
+    "test": "./node_modules/mocha/bin/mocha test -R dot"
   },
   "author": "Erik Hazzard <enoex1@gmail.com>",
   "repository": {
