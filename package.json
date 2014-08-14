@@ -1,0 +1,16 @@
+{
+  "name": "Bragi-Node",
+  "description": "Javascript logging framework for NodeJS",
+  "version": "0.0.1",
+  "author": "Erik Hazzard <enoex1@gmail.com>",
+  "repository": "enoex/Bragi-Node",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test"
+  }
+}
