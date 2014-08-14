@@ -98,6 +98,19 @@ describe('Bragi: Javascript Logger', function(){
                 logger.log('blabla:group1:subgroup1', 'not logged'); 
                 logs.length.should.equal(2);
             });
+
+            it('should log deep subgroups', function(){
+                logger.options.logLevel = ['group1:subgroup1:subgroup2:subgroup3'];
+                logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
+                logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
+
+                logger.log('group1', 'NOT logged'); 
+                logger.log('group1:subgroup1', 'NOT logged'); 
+                logger.log('group1:subgroup1:subgroup3:subgroup3:subgroup4', 'NOT logged'); 
+                logger.log('group1:subgroup2', 'not logged'); 
+                logger.log('blabla:group1:subgroup1', 'not logged'); 
+                logs.length.should.equal(2);
+            });
         });
     });
 
