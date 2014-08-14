@@ -32,3 +32,6 @@ Logging is a powerful and often underused tool. Like anything, there are tradeof
 * Aides in refactoring
 * Helps you to maintain context of what your code is doing
 
+
+## Running Tests
+Run `npm test`
