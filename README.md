@@ -6,21 +6,6 @@ Bragi is javascript logging library with colors, custom log levels, and server r
 
 This repository is for the NodeJS version of Bragi. Bragi allows you to write log messages that you can leave in your code, and allows you to specify what logs get output to the console.
 
-# Usage
-
-## Log Levels
-Unlike other libraries where log levels are linear, in Bragi log levels are categorical and completely arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});". 
-
-By having arbitrary log levels, you can have fine grain control over what log messages are outputted. 
-
-## Formatting Options
-Format specifier    Description
-
-* `%s`	Formats the value as a string.
-* `%d` or `%i`	Formats the value as an integer.
-* `%f`	Formats the object as a floating point value.
-* `%O`	Formats the value as an expandable JavaScript object.
-
 ### Usefulness of logging
 
 [View an overview of how logging can be a powerful tool](http://vasir.net/blog/development/how-logging-made-me-a-better-developer).
@@ -31,6 +16,29 @@ Logging is a powerful and often underused tool. Like anything, there are tradeof
 * Makes it significantly easier to debug the flow of execution
 * Aides in refactoring
 * Helps you to maintain context of what your code is doing
+
+
+# Usage
+
+## Output
+By default the logger will log to console. 
+
+TODO: ** Log structured data ** e.g., { message: "Message", meta: { time: '...', ... }, OTHER_KEYS_USER_PASSES_IN }
+
+TODO: Output modes
+
+TODO: File logging, sending requests... other transports
+
+## Log Levels
+Unlike other libraries where log levels are linear, in Bragi log levels are categorical and completely arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});". 
+
+By having arbitrary log levels, you can have fine grain control over what log messages are outputted. 
+
+## Formatting Options
+
+When logging, it is useful to be able to log objects. The simplest way to do this is to use string formatting and log a passed in object as JSON. For instance: ("Hello there %j", { key: 42 })
+
+* `%j`	Formats value as a JSON object
 
 
 ## Running Tests
