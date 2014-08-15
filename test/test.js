@@ -111,6 +111,53 @@ describe('Bragi: Javascript Logger', function(){
                 logger.log('blabla:group1:subgroup1', 'not logged'); 
                 logs.length.should.equal(2);
             });
+
+            describe('regular expressions', function(){
+                it('should test for /group1/', function(){
+                    logger.options.logLevel = [/group1/];
+                    logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
+                    logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
+                    logger.log('group1', 'logged'); 
+                    logger.log('group1:subgroup1', 'logged'); 
+                    logger.log('group1:subgroup1:subgroup3:subgroup3:subgroup4', 'logged'); 
+                    logger.log('group1:subgroup2', 'logged'); 
+                    // NOTE: This is a regex, so "subgroup1" WILL match (because
+                    // group1 is found in the string)
+                    logger.log('blabla:group2:subgroup1', 'logged'); 
+
+                    logger.log('bbla:nomatch', 'not logged');
+                    logger.log('group2', 'not logged');
+
+                    logs.length.should.equal(7);
+                });
+
+                it('should test for /^group1/ (match at start of string)', function(){
+                    logger.options.logLevel = [/^group1/];
+                    logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
+                    logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
+                    logger.log('group1', 'logged'); 
+
+                    logger.log('group2:group1', 'not logged'); 
+                    logger.log('blabla:group2:subgroup1', 'not logged'); 
+                    logger.log('bbla:nomatch', 'not logged');
+
+                    logs.length.should.equal(3);
+                });
+
+                it('should test for /.*subgroup1/ (match anything that contains subgroup1)', function(){
+                    logger.options.logLevel = [/.*subgroup1/];
+                    logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
+                    logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
+                    logger.log('blabla:innerbla:subgroup1', 'logged'); 
+                    logger.log('blabla:group2:subgroup1', 'logged'); 
+
+                    logger.log('group1', 'not logged'); 
+                    logger.log('group2:group1', 'not logged'); 
+                    logger.log('bbla:nomatch', 'not logged');
+
+                    logs.length.should.equal(4);
+                });
+            });
         });
     });
 
