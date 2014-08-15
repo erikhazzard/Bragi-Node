@@ -101,7 +101,7 @@ logger.log(
 // log a bunch of stuff!
 // --------------------------------------
 var message;
-for(var i=0; i<20; i++){
+for(var i=0; i<30; i++){
     message = "I am a log message! ";
     for(var j=0; j<(Math.random() * 5|0); j++){
         message += message;
