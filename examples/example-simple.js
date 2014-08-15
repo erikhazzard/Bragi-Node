@@ -14,7 +14,7 @@ logger.log('group1', 'Hello %j', "world");
 logger.log('group1', 'Hello %j', [1,2,3]);
 logger.log(
     'group1', 
-    'Hello %j :::::::: ', 
+    logger.util.print('Hello %j :::::::: ', 'green'), 
     {name: 'world', size: 'big', props: {answer: 42}},
     {name: 'world', size: 'big', props: {answer: 42}}
 );
