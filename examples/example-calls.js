@@ -95,3 +95,23 @@ logger.log(
     'group3', 
     logger.util.print(logger.util.symbols.circleFilled, 'green') + " nom nom filled circle"
 );
+
+
+// --------------------------------------
+// log a bunch of stuff!
+// --------------------------------------
+var message;
+for(var i=0; i<20; i++){
+    message = "I am a log message! ";
+    for(var j=0; j<(Math.random() * 5|0); j++){
+        message += message;
+    }
+    logger.log('group' + i, message);
+}
+
+
+// --------------------------------------
+// Finally, show some reserved messages
+// --------------------------------------
+logger.log('error', 'This is an error!');
+logger.log('warn', 'This is a warning!');
