@@ -46,12 +46,12 @@ logger.log('group1:subgroup1', 'Hi');
 logger.log('group1:subgroup1:subgroup2', 'Hi');
 
 // Set log level (specifying which logs to show
-logger.options.logLevel = ['group1'];
+logger.options.groupsEnabled = ['group1'];
 logger.log('group1', 'Shown');
 logger.log('group2', 'Not shown');
 
 // Set log level - sub groups
-logger.options.logLevel = ['group1:subgroup1'];
+logger.options.groupsEnabled = ['group1:subgroup1'];
 logger.log('group1:subgroup1', 'Shown');
 logger.log('group1:subgroup2', 'Shown');
 
@@ -60,7 +60,7 @@ logger.log('group1:subgroup2', 'Shown');
 // Show multiple logs
 // --------------------------------------
 // Everything
-logger.options.logLevel = true;
+logger.options.groupsEnabled = true;
 logger.log('group1', 'I am the first');
 logger.log('group2', 'I am the second');
 logger.log('group3', 'I am just right');

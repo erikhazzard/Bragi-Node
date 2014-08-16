@@ -30,12 +30,12 @@ describe('Bragi: Javascript Logger', function(){
 
     // ----------------------------------
     //
-    // Reset logs, logLevel, and history before *each* test
+    // Reset logs, groupsEnabled, and history before *each* test
     //
     // ----------------------------------
     beforeEach(function(){
         logs = [];
-        logger.options.logLevel = true;
+        logger.options.groupsEnabled = true;
         logger.history = {};
     });
     
@@ -46,13 +46,13 @@ describe('Bragi: Javascript Logger', function(){
 
         describe('log everything', function(){
             it('should log everything', function(){
-                logger.options.logLevel = true;
+                logger.options.groupsEnabled = true;
                 logger.log('group1', 'hello'); 
                 logs.length.should.equal(1);
             });
 
             it('should log everything', function(){
-                logger.options.logLevel = true;
+                logger.options.groupsEnabled = true;
                 logger.log('group1', 'hello'); 
                 logger.log('group2', 'hello'); 
                 logger.log('group3', 'hello'); 
@@ -62,7 +62,7 @@ describe('Bragi: Javascript Logger', function(){
 
         describe('log by groups', function(){
             it('should only log one group', function(){
-                logger.options.logLevel = ['group1'];
+                logger.options.groupsEnabled = ['group1'];
                 logger.log('group1', 'logged'); 
 
                 logger.log('some-group-group1', 'not logged'); 
@@ -71,7 +71,7 @@ describe('Bragi: Javascript Logger', function(){
             });
 
             it('should log multiple groups', function(){
-                logger.options.logLevel = ['group1', 'group2'];
+                logger.options.groupsEnabled = ['group1', 'group2'];
                 logger.log('group1', 'logged'); 
                 logger.log('group2', 'logged'); 
 
@@ -80,7 +80,7 @@ describe('Bragi: Javascript Logger', function(){
             });
 
             it('should log subgroups', function(){
-                logger.options.logLevel = ['group1:subgroup1'];
+                logger.options.groupsEnabled = ['group1:subgroup1'];
                 logger.log('group1:subgroup1', 'logged'); 
 
                 logger.log('group1:subgroup2', 'not logged'); 
@@ -88,7 +88,7 @@ describe('Bragi: Javascript Logger', function(){
             });
 
             it('should log subgroups and their subgroups', function(){
-                logger.options.logLevel = ['group1:subgroup1'];
+                logger.options.groupsEnabled = ['group1:subgroup1'];
                 logger.log('group1:subgroup1', 'logged'); 
                 logger.log('group1:subgroup1:subgroup2', 'logged'); 
 
@@ -98,7 +98,7 @@ describe('Bragi: Javascript Logger', function(){
             });
 
             it('should log deep subgroups', function(){
-                logger.options.logLevel = ['group1:subgroup1:subgroup2:subgroup3'];
+                logger.options.groupsEnabled = ['group1:subgroup1:subgroup2:subgroup3'];
                 logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
                 logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
 
@@ -112,7 +112,7 @@ describe('Bragi: Javascript Logger', function(){
 
             describe('regular expressions', function(){
                 it('should test for /group1/', function(){
-                    logger.options.logLevel = [/group1/];
+                    logger.options.groupsEnabled = [/group1/];
                     logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
                     logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
                     logger.log('group1', 'logged'); 
@@ -130,7 +130,7 @@ describe('Bragi: Javascript Logger', function(){
                 });
 
                 it('should test for /^group1/ (match at start of string)', function(){
-                    logger.options.logLevel = [/^group1/];
+                    logger.options.groupsEnabled = [/^group1/];
                     logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
                     logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
                     logger.log('group1', 'logged'); 
@@ -143,7 +143,7 @@ describe('Bragi: Javascript Logger', function(){
                 });
 
                 it('should test for /.*subgroup1/ (match anything that contains subgroup1)', function(){
-                    logger.options.logLevel = [/.*subgroup1/];
+                    logger.options.groupsEnabled = [/.*subgroup1/];
                     logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
                     logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
                     logger.log('blabla:innerbla:subgroup1', 'logged'); 
@@ -184,14 +184,14 @@ describe('Bragi: Javascript Logger', function(){
     // ----------------------------------
     describe('History tests', function(){
         it('should log some group and story history', function(){
-            logger.options.logLevel = true;
+            logger.options.groupsEnabled = true;
 
             logger.log('h1', 'hello');
             assert(logger.history.h1.length === 1);
         });
 
         it('should log some group and story history for multiple groups', function(){
-            logger.options.logLevel = true;
+            logger.options.groupsEnabled = true;
 
             logger.log('h2', 'hello');
             assert(logger.history.h2.length === 1);
@@ -210,8 +210,8 @@ describe('Bragi: Javascript Logger', function(){
             assert(logger.history.h4.length === 2);
         });
 
-        it('should not add logs to history if log level is not in logLevel array', function(){
-            logger.options.logLevel = ['h1only'];
+        it('should not add logs to history if log level is not in groupsEnabled array', function(){
+            logger.options.groupsEnabled = ['h1only'];
             
             logger.log('h1only', 'this is logged in history');
             // won't get added to history since it's not logged
@@ -223,7 +223,7 @@ describe('Bragi: Javascript Logger', function(){
 
         it('should add everything to history if storeAllHistory is true', function(){
             logger.options.storeAllHistory = true;
-            logger.options.logLevel = ['h1only'];
+            logger.options.groupsEnabled = ['h1only'];
             
             logger.log('h1only', 'this is logged in history');
             logger.log('h2only', 'this is also logged in history, but NOT logged to console');
