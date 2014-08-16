@@ -34,9 +34,21 @@ describe('Bragi: Javascript Logger', function(){
     //
     // ----------------------------------
     beforeEach(function(){
+        // Reset all logs, logger options, etc.
         logs = [];
-        logger.options.groupsEnabled = true;
         logger.history = {};
+        logger.options.groupsEnabled = true;
+        logger.options.groupsDisabled = [];
+        logger.options.storeAllHistory = false;
+        logger.options.historyLimit = 200;
+        logger.options.transports = [
+            new logger.transportClasses.Console({
+                showMeta: true, 
+                showCaller: true,
+                showTime: true,
+                showFullStackTrace: false
+            })
+        ]
     });
     
     // ----------------------------------
@@ -235,7 +247,20 @@ describe('Bragi: Javascript Logger', function(){
             assert(logger.history.h3only.length === 1);
             assert(logger.history.blabla === undefined);
         });
+    });
 
+    // ----------------------------------
+    // disabled group tests (blacklist)
+    // ----------------------------------
+    describe('History tests', function(){
+        it('should not log groups that are blacklisted', function(){
+            logger.options.groupsDisabled = ['group1'];
+
+            logger.log('group2', 'Should be logged');
+            logger.log('group3', 'Should be logged');
+                
+            logs.length.should.equal(2); 
+        });
     });
 
     // ----------------------------------
