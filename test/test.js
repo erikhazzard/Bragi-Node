@@ -6,8 +6,6 @@
  * ========================================================================= */
 var mocha = require('mocha');
 var should = require('chai').should();
-var _ = require('lodash');
-var request = require('request');
 var chai = require('chai');
 var assert = chai.assert;
 
