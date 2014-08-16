@@ -1,4 +1,5 @@
 # Bragi : Javascript Logger
+
 Bragi is javascript logging library with colors, custom log levels, and server reporting functionality.
 
 ![Bragi](http://38.media.tumblr.com/tumblr_lcdao4PDgj1qbz35lo1_500.jpg)
@@ -19,6 +20,21 @@ Logging is a powerful and often underused tool. Like anything, there are tradeof
 
 
 # Usage
+
+## Specifying what to log
+
+`groupsEnabled`: An {Array} of {String}s or {RegExp} regular expressions, specifying which groups can be logged. NOTE: Can also be a {Boolean} : if `true`, *everything* is logged; if `false`, nothing is logged
+
+`groupsDisabled`: An {Array} of {String}s {RegExp} regular expressions, specifying which groups to exclude from logging. This is useful if you want to log everything *except* some particular groups.
+
+**Examples**:
+
+`var logger = require('bragi');`
+`logger.options.groupsEnabled = [ 'group1:subgroup1', '.*:userId' ]` would log all group1:subgroup1 logs (including nested subgroups, e.g., `group1:subgroup1:subsubgroup1`). `.*:userId` would match anything that contained ":userId" (`userId` could be an actual userId, would allow you to capture all logs for a particular user)
+
+To specify a blacklist via groupsDisabled:
+`logger.options.groupsEnabled = true; logger.options.groupsDisabled = ['group1'];`  This would log everything *except* `group1`
+
 
 ## Output
 By default the logger will log to console. 
