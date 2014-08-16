@@ -41,14 +41,15 @@ describe('Bragi: Javascript Logger', function(){
         logger.options.groupsDisabled = [];
         logger.options.storeAllHistory = false;
         logger.options.historyLimit = 200;
-        logger.options.transports = [
+        logger.transports.empty();
+        logger.transports.add(
             new logger.transportClasses.Console({
                 showMeta: true, 
                 showCaller: true,
                 showTime: true,
                 showFullStackTrace: false
             })
-        ]
+        );
     });
     
     // ----------------------------------
@@ -256,10 +257,52 @@ describe('Bragi: Javascript Logger', function(){
         it('should not log groups that are blacklisted', function(){
             logger.options.groupsDisabled = ['group1'];
 
+            logger.log('group1', 'Should NOT be logged');
+
             logger.log('group2', 'Should be logged');
             logger.log('group3', 'Should be logged');
                 
             logs.length.should.equal(2); 
+        });
+
+        it('should not log sub groups that are blacklisted', function(){
+            logger.options.groupsDisabled = ['group1'];
+
+            logger.log('group1', 'Should NOT be logged');
+            logger.log('group1:subgroup1', 'Should NOT be logged');
+            logger.log('group1:subgroup1:subgroup2', 'Should NOT be logged');
+
+            logger.log('group2', 'Should be logged');
+            logger.log('group3', 'Should be logged');
+                
+            logs.length.should.equal(2); 
+        });
+
+        it('should not log regex that are blacklisted', function(){
+            logger.options.groupsDisabled = [/disabled/];
+
+            logger.log('group1', 'Should be logged');
+            logger.log('group1:subgroup1', 'Should be logged');
+
+            logger.log('group1:disabled', 'Should NOT be logged');
+            logger.log('disabled', 'Should NOT be logged');
+            logger.log('balbaldisabledbalabla', 'Should NOT be logged');
+                
+            logs.length.should.equal(2); 
+        });
+
+        it('should not log multiple blacklisted items', function(){
+            logger.options.groupsDisabled = ['group1', /disabled/];
+
+            logger.log('gropu2', 'should be logged');
+
+            logger.log('group1', 'Should NOT be logged');
+            logger.log('group1:subgroup1', 'Should NOT be logged');
+            logger.log('group1:disabled', 'Should NOT be logged');
+            logger.log('disabled', 'Should NOT be logged');
+            logger.log('balbaldisabledbalabla', 'Should NOT be logged');
+                
+            logs.length.should.equal(1); 
         });
     });
 
