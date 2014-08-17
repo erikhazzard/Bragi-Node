@@ -316,6 +316,54 @@ describe('Bragi: Javascript Logger', function(){
     });
 
     // ----------------------------------
+    // Some 'performance' tests
+    // ----------------------------------
+    describe('log() by group', function(){
+
+        describe('log everything', function(){
+            it('should log 100 at once in a trivial amount of time', function(){
+                var numLogCalls = 100;
+                var start = new Date();
+
+                for(var i=0; i<numLogCalls; i++){
+                    logger.log('group1', 'hello'); 
+                }
+
+                process.stdout.write('\tDone with ' + numLogCalls + 
+                    ' calls in ' + +(new Date() - start) + 'ms \n');
+
+                //logs.length.should.equal(numLogCalls);
+            });
+            it('should log 1,000 messages at once', function(){
+                var numLogCalls = 1000;
+                var start = new Date();
+
+                for(var i=0; i<numLogCalls; i++){
+                    logger.log('group1', 'hello'); 
+                }
+
+                process.stdout.write('\tDone with 1,000 ' +
+                    ' calls in ' + +(new Date() - start) + 'ms \n');
+
+                //logs.length.should.equal(numLogCalls);
+            });
+            it('should log 10,000 messages at once', function(){
+                var numLogCalls = 10000;
+                var start = new Date();
+
+                for(var i=0; i<numLogCalls; i++){
+                    logger.log('group1', 'hello'); 
+                }
+
+                process.stdout.write('\tDone with 10,000 ' +
+                    ' calls in ' + +(new Date() - start) + 'ms \n');
+
+                //logs.length.should.equal(numLogCalls);
+            });
+        });
+    });
+
+    // ----------------------------------
     //
     // Reset the console log functionality when done
     //

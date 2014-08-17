@@ -13,7 +13,7 @@ This repository is for the NodeJS version of Bragi. Bragi allows you to write lo
 
 Logging is a powerful and often underused tool. Like anything, there are tradeoffs. Some of the benefits of persisting log statements in your code include:
 
-* Doubles as explict documentation. In some ways, they're like actionable comments
+* Doubles as explicit documentation. In some ways, they're like actionable comments
 * Makes it significantly easier to debug the flow of execution
 * Aides in refactoring
 * Helps you to maintain context of what your code is doing

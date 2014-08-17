@@ -9,12 +9,8 @@ var logger = require('../lib/bragi');
 // Configure logger
 // --------------------------------------
 
-//// Show the full stack trace for each log?
-//logger.options.showFullStackTrace = true;
-
-//// Show the meta info for each log (caller func, time, filename, line, column)
-//// (true by default)
-//logger.options.showMeta = false;
+// Need to store the stack trace to see info on filename and line number
+logger.options.storeStackTrace= true;
 
 // --------------------------------------
 //
