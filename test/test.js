@@ -36,12 +36,11 @@ describe('Bragi: Javascript Logger', function(){
     beforeEach(function(){
         // Reset all logs, logger options, etc.
         logs = [];
-        logger.history = {};
         logger.options.groupsEnabled = true;
         logger.options.groupsDisabled = [];
         logger.options.storeAllHistory = false;
-        logger.options.historyLimit = 200;
         logger.transports.empty();
+
         logger.transports.add(
             new logger.transportClasses.Console({
                 showMeta: true, 
@@ -193,49 +192,59 @@ describe('Bragi: Javascript Logger', function(){
     });
 
     // ----------------------------------
-    // History Tests
+    // Transports - History Tests
     // ----------------------------------
-    describe('History tests', function(){
+    describe('Transports - History tests', function(){
         it('should log some group and story history', function(){
+            var history = new logger.transportClasses.History({});
+            logger.transports.add(history);
+
             logger.options.groupsEnabled = true;
 
             logger.log('h1', 'hello');
-            assert(logger.history.h1.length === 1);
+            assert(history.history.h1.length === 1);
         });
 
         it('should log some group and story history for multiple groups', function(){
+            var history = new logger.transportClasses.History({});
+            logger.transports.add(history);
             logger.options.groupsEnabled = true;
 
             logger.log('h2', 'hello');
-            assert(logger.history.h2.length === 1);
+            assert(history.history.h2.length === 1);
 
             logger.log('h2', 'hello again');
-            assert(logger.history.h2.length === 2);
+            assert(history.history.h2.length === 2);
 
             logger.log('h3', 'hello again');
-            assert(logger.history.h3.length === 1);
-            assert(logger.history.h2.length === 2);
+            assert(history.history.h3.length === 1);
+            assert(history.history.h2.length === 2);
 
             logger.log('h4', 'hello there');
             logger.log('h4', 'oh hi');
-            assert(logger.history.h2.length === 2);
-            assert(logger.history.h3.length === 1);
-            assert(logger.history.h4.length === 2);
+            assert(history.history.h2.length === 2);
+            assert(history.history.h3.length === 1);
+            assert(history.history.h4.length === 2);
         });
 
         it('should not add logs to history if log level is not in groupsEnabled array', function(){
+            var history = new logger.transportClasses.History({});
+            logger.transports.add(history);
             logger.options.groupsEnabled = ['h1only'];
             
             logger.log('h1only', 'this is logged in history');
             // won't get added to history since it's not logged
             logger.log('h2only', 'this is not logged');
 
-            assert(logger.history.h1only.length === 1);
-            assert(logger.history.h2only === undefined);
+            assert(history.history.h1only.length === 1);
+            assert(history.history.h2only === undefined);
         });
 
-        it('should add everything to history if storeAllHistory is true', function(){
-            logger.options.storeAllHistory = true;
+        it('should add everything to history if storeEverything is true', function(){
+            var history = new logger.transportClasses.History({
+                storeEverything: true
+            });
+            logger.transports.add(history);
             logger.options.groupsEnabled = ['h1only'];
             
             logger.log('h1only', 'this is logged in history');
@@ -243,10 +252,10 @@ describe('Bragi: Javascript Logger', function(){
             logger.log('h3only', 'this is also logged in history, but NOT logged to console');
 
             assert(logs.length === 1);
-            assert(logger.history.h1only.length === 1);
-            assert(logger.history.h2only.length === 1);
-            assert(logger.history.h3only.length === 1);
-            assert(logger.history.blabla === undefined);
+            assert(history.history.h1only.length === 1);
+            assert(history.history.h2only.length === 1);
+            assert(history.history.h3only.length === 1);
+            assert(history.history.blabla === undefined);
         });
     });
 
