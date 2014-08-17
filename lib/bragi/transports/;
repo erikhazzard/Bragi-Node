@@ -13,7 +13,7 @@ function TransportFile ( options ){
 
     this.filename = options.filename;
     if(!this.filename){
-        throw new Error('No filename passed into TransportFile options object');
+        throw new Error('No filename passed into TransportFile options object')
     }
 
     // TODO: Add batch writing capabilities (maybe streams / cork() / uncork())
