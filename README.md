@@ -1,10 +1,24 @@
-# Bragi : Javascript Logger
+# Bragi : Javascript Logger - NodeJS 
 
 *NOTE : This is an early release and the API is subject to change. Improvements and pull requests are welcome*
 
 Bragi is javascript logging library with colors, custom log levels, and server reporting functionality. This repository is for the NodeJS version of Bragi. Bragi allows you to write log messages that you can leave in your code, and allows you to specify what logs get output to the console.
 
 ![Bragi](http://38.media.tumblr.com/tumblr_lcdao4PDgj1qbz35lo1_500.jpg)
+
+# Installation
+
+`npm install bragi-node`
+
+Then, include it and use it:
+
+`var logger = require('bragi');`
+
+Next, log something:
+
+`logger.log('groupname', 'Hello world');
+
+
 
 ## Ideas Behind Bragi
 
