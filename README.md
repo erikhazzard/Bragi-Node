@@ -19,31 +19,41 @@ This repository is for the NodeJS version of Bragi.
 Then, include it in your code: 
 
     ```javascript
+
     var logger = require('bragi');
+
     ```
 
 Next, log something:
 
     ```javascript
+
     logger.log('groupname', 'Hello world');
+
     ```
 
 Calls to `log` take in two required parameters: `groupName` and `message`. Any additional parameters (such as object info) will be included in the log message also. For instance:
     
     ```javascript
+
     logger.log('groupname', 'Here is some user info', { name: 'Ironman', weaknesses: null });
+
     ```
 
 One of the benefits Bragi provides is the ability to supply arbitrary group names and namespace for groups (separated by a colon). For instance:
 
     ```javascript
+
     logger.log('userController:fetchInfo', 'fetching user information...');
+
     ```
 
 Because the groupname is a string, you can dynamically create it:
     
     ```javascript
+
     logger.log('userController:fetchInfo:ironman', 'fetching user information...');
+
     ```
 
 With group names, we're able to filter messages by groups and their namespaces, or by a regular expression (e.g., we have the ability to show ALL logs for the `ironman` user)
@@ -62,13 +72,17 @@ By having arbitrary log levels, you can have fine grain control over what log me
 **Examples**:
 
     ```javascript
+
     var logger = require('bragi');
+
     ```
 
 Now, let's enable all `group1:subgroup1` logs and any log message that contains the user ironman, denoted by `:ironman`:
 
     ```javascript
+
     logger.options.groupsEnabled = [ 'group1:subgroup1', '.*:ironman' ]
+
     ```
 
 The this would log all `group1:subgroup1` logs, including nested subgroups: for instance, `group1:subgroup1:subsubgroup1`. 
@@ -78,8 +92,10 @@ The this would log all `group1:subgroup1` logs, including nested subgroups: for 
 To specify a blacklist, use `groupsDisabled`. This would log everything *except* `group1`:
 
     ```javascript
+
     logger.options.groupsEnabled = true; 
     logger.options.groupsDisabled = ['group1'];
+
     ```
 
 ### Built in log types
@@ -116,6 +132,7 @@ NOTE: See `examples/example-json.js` to see what a loggedObject looks like.
 Here is what a simple transport definition looks like:
 
     ```javascript
+
     function MyTransport ( options ){
         options = options || {};
 
@@ -138,6 +155,7 @@ Here is what a simple transport definition looks like:
         // Do something with loggedObject 
         return this;
     };
+
     ```
 
 
