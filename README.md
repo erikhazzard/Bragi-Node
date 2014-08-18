@@ -2,14 +2,15 @@
 
 ![Bragi](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-small.gif)
 
-*NOTE : This is an early release and the API is subject to change. Improvements and pull requests are welcome*
+*NOTE : This is an early release and the API is subject to change. Improvements and pull requests are welcome. [View the post which describes the purpose behind this library and some of its features](http://vasir.net/blog/development/how-logging-made-me-a-better-developer)*
 
 Bragi is javascript logging library with colors, custom log levels, and server reporting functionality. Bragi allows you to write log messages that you can leave in your code, and allows you to specify what logs get output to the console.
 
 This repository is for the NodeJS version of Bragi. 
 
 ![Bragi](http://38.media.tumblr.com/tumblr_lcdao4PDgj1qbz35lo1_500.jpg)
-**Bragi is the Norse god of Poetry**
+
+*Bragi is the Norse god of Poetry*
 
 # Installation
 
