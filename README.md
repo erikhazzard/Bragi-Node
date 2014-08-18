@@ -32,9 +32,17 @@ Logging is a powerful and often underused tool. Like anything, there are tradeof
 
 
 # Usage
+First, include bragi:
+
+`var logger = require('bragi');`
+
+Next, log something:
+
+`logger.log('groupname', 'Hello world');
+
 
 ## Log Levels
-Unlike other libraries where log levels are linear, in Bragi log levels are categorical and completely arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});". 
+Unlike other libraries where log levels are linear, in Bragi log levels are categorical and completely arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});`. 
 
 By having arbitrary log levels, you can have fine grain control over what log messages are outputted. 
 
@@ -47,13 +55,24 @@ By having arbitrary log levels, you can have fine grain control over what log me
 **Examples**:
 
 `var logger = require('bragi');`
-`logger.options.groupsEnabled = [ 'group1:subgroup1', '.*:userId' ]` would log all group1:subgroup1 logs (including nested subgroups, e.g., `group1:subgroup1:subsubgroup1`). `.*:userId` would match anything that contained ":userId" (`userId` could be an actual userId, would allow you to capture all logs for a particular user)
 
-To specify a blacklist via groupsDisabled:
-`logger.options.groupsEnabled = true; logger.options.groupsDisabled = ['group1'];`  This would log everything *except* `group1`
+The following would log all `group1:subgroup1` logs (including nested subgroups, e.g., `group1:subgroup1:subsubgroup1`). `.*:userId` would match anything that contained ":userId" (`userId` could be an actual userId, would allow you to capture all logs for a particular user)
+
+`logger.options.groupsEnabled = [ 'group1:subgroup1', '.*:userId' ]` 
+
+To specify a blacklist, use `groupsDisabled`. This would log everything *except* `group1`:
+
+`logger.options.groupsEnabled = true; logger.options.groupsDisabled = ['group1'];`  
 
 ### Examples
 In the `examples` folder, there are various examples of calling and configuring Bragi.
+
+## Util
+Bragi provides a couple utility functions to help you write logs messages that have strong visual cues.
+
+* `logger.util.symbols` : This is a dictionary of UTF-8 symbols - such as `success` (a green ✔︎) and  `error` (a red '✘'). All the symbols can be viewed in `lib/bragi/symbols.js`
+
+* `logger.util.print( message, color )` : This is function takes in a message {String} and color {String} and returns the message string in the passed in color.
 
 # Output - Transports
 By default, Bragi uses the Console transport, which will log colored messages to the console.
@@ -92,6 +111,7 @@ Here is what a simple transport definition looks like:
 
 
 See `lib/bragi/transports/ConsoleJSON` for a simple example of a working transport.
+
 
 ## Running Tests
 Run `npm test`
