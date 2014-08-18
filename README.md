@@ -78,6 +78,9 @@ To specify a blacklist, use `groupsDisabled`. This would log everything *except*
 
 `logger.options.groupsEnabled = true; logger.options.groupsDisabled = ['group1'];`  
 
+### Built in log types
+Currently only two built in log types exist: `error` and `warn`. These types can also be namespaced (e.g., `error:group1:subgroup1` is valid). For error messages, the background will always be red and the foreground white. For warn messages, the background is yellow and foreground is white. The text will also blink. These are reserved colors, so anywhere a red background and white text exist you can immediately know an error has been logged.
+
 ### Examples
 In the `examples` folder, there are various examples of calling and configuring Bragi.
 
