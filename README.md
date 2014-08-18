@@ -1,6 +1,6 @@
 # Bragi : Javascript Logger - NodeJS 
 
-![Bragi](https://s3.amazonaws.com/vasir-assets/bragi/bragi-log-small.gif)
+![Bragi](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-small.gif)
 
 *NOTE : This is an early release and the API is subject to change. Improvements and pull requests are welcome*
 
@@ -84,6 +84,7 @@ To specify a blacklist, use `groupsDisabled`. This would log everything *except*
 Currently only two built in log types exist: `error` and `warn`. These types can also be namespaced (e.g., `error:group1:subgroup1` is valid). For error messages, the background will always be red and the foreground white. For warn messages, the background is yellow and foreground is white. The text will also blink. These are reserved colors, so anywhere a red background and white text exist you can immediately know an error has been logged.
 
 ### Examples
+![Log example](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-still-small.png)
 In the `examples` folder, there are various examples of calling and configuring Bragi.
 
 ## Util
