@@ -1,5 +1,5 @@
 {
-  "name": "Bragi-Node",
+  "name": "bragi-node",
   "version": "0.0.2",
   "description": "Javascript logging framework for NodeJS",
   "main": "lib/bragi.js",
@@ -17,10 +17,17 @@
     "framework"
   ],
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "*",
     "chai": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/enoex/Bragi-Node/issues"
+  },
+  "homepage": "https://github.com/enoex/Bragi-Node",
+  "directories": {
+    "example": "examples",
+    "test": "test"
   }
 }
