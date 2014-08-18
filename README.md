@@ -14,7 +14,7 @@ This repository is for the NodeJS version of Bragi.
 
 # Installation and Usage
 
-`$ npm install bragi-node`
+`$ npm install bragi`
 
 Then, include it in your code: 
 
