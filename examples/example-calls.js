@@ -41,7 +41,8 @@ logger.log('group1', 'Top level group log');
 logger.log('group1:subgroup1', 'subgroup message');
 logger.log('group1:subgroup1:subgroup2', 'nested subgroup message');
 
-var baseDelay = 700;
+// Put a bunch of calls on a delay to mimic real world calls
+var baseDelay = 300;
 
 setTimeout(function intialTimeout(){
     // Set log level (specifying which logs to show
