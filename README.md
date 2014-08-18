@@ -16,7 +16,7 @@ Then, include it and use it:
 
 Next, log something:
 
-`logger.log('groupname', 'Hello world');
+`logger.log('groupname', 'Hello world');`
 
 
 
@@ -52,7 +52,7 @@ First, include bragi:
 
 Next, log something:
 
-`logger.log('groupname', 'Hello world');
+`logger.log('groupname', 'Hello world');`
 
 
 ## Log Levels
