@@ -67,6 +67,13 @@ To specify a blacklist, use `groupsDisabled`. This would log everything *except*
 ### Examples
 In the `examples` folder, there are various examples of calling and configuring Bragi.
 
+## Util
+Bragi provides a couple utility functions to help you write logs messages that have strong visual cues.
+
+* `logger.util.symbols` : This is a dictionary of UTF-8 symbols - such as `success` (a green ✔︎) and  `error` (a red '✘'). All the symbols can be viewed in `lib/bragi/symbols.js`
+
+* `logger.util.print( message, color )` : This is function takes in a message {String} and color {String} and returns the message string in the passed in color.
+
 # Output - Transports
 By default, Bragi uses the Console transport, which will log colored messages to the console.
 
@@ -104,6 +111,7 @@ Here is what a simple transport definition looks like:
 
 
 See `lib/bragi/transports/ConsoleJSON` for a simple example of a working transport.
+
 
 ## Running Tests
 Run `npm test`
