@@ -8,7 +8,6 @@ var logger = require('../lib/bragi');
 
 //// This properties are set by default:
 //logger.options.logLevel = true;
-//logger.options.showFullStackTrace = false;
 
 // Remove the default console transport and add a JSON console transport
 logger.transports.empty();

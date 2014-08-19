@@ -44,9 +44,7 @@ describe('Bragi: Javascript Logger', function(){
         logger.transports.add(
             new logger.transportClasses.Console({
                 showMeta: true, 
-                showCaller: true,
-                showTime: true,
-                showFullStackTrace: false
+                showStackTrace: false
             })
         );
     });

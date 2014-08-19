@@ -98,12 +98,45 @@ Bragi provides a couple utility functions to help you write logs messages that h
 
 * `logger.util.print( message, color )` : This is function takes in a message {String} and color {String} and returns the message string in the passed in color.
 
+# Configuration
+
+## Bragi config ##
+To configure bragi, require it then set the properties defined in the `options` object. For instance:
+
+```javascript
+var logger = require('bragi');
+logger.options.PROPERTY = VALUE;
+```
+
+The available options are:
+
+* `groupsEnabled`: An array of {Strings} or {RegExp} (regular expressions) specifying which groups to log - which messages will be sent to all available transports
+* `groupsDisabled`: An array of {Strings} or {RegExp} (regular expressions) specifying which groups to exclude from logs. This acts a blacklist, and will take priority over logs defined in `groupsEnabled`.
+* `storeStackTrace`: `false` by default. Will store the stack trace if set to `true`. This provides more info, but adds overhead. Very useful when in development, tradeoffs should be considered when in production
+
+
 # Output - Transports
+
 By default, Bragi uses the Console transport, which will log colored messages to the console.
 
-Currently, you can use `logger.transports.empty();` to remove all transports, and `logger.transports.add( new logger.transportClasses.Transport( {} ) )` (where Transport is a transport, found in `lib/bragi/transports/`).
+## Changing Transports
+
+Currently, you can use `logger.transports.empty();` to remove all transports.
+
+To add a transport, use `logger.transports.add( new logger.transportClasses.Transport( {} ) )` (where Transport is a transport, found in `lib/bragi/transports/`).
+
+Currently available transports are `Console`, `ConsoleJSON`, `History`, and `File`. Future transports include sending data to a remote host (e.g., Graylog).
 
 See `examples/example-json.js` for an example of removing the default transport and adding a new one.  
+
+## Configuring Transports
+
+All transports take in, at a minimum, `groupsEnabled` and `groupsDisabled`. This allows transport level configuration of what log messages to use. By default, they will use whatever is set on the global logger object. This is useful, for instance, if you want to send *all* logs to a remote host but only want to show error logs in the console output.
+
+### Console Transport - Configuration
+
+`showMeta`: {Boolean} `true` by default. Specifies whether to show the meta info (caller, time, etc.) as a new line after each message
+`showStackTrace`: {Boolean} `false` by default. If set to true, requires the logger's `storeStackTrace` to be set to {true}. Will print the stack trace for each log
 
 ## Writing Custom Transports
 
@@ -144,9 +177,10 @@ MyTransport.prototype.log = function MyTransportLog( loggedObject ){
 See `lib/bragi/transports/ConsoleJSON` for a simple example of a working transport.
 
 ## Running Tests
-Run `npm test`
 
-## Ideas Behind Bragi
+While Bragi itself has no dependencies, the tests depend on Mocha and Chai. Install dev dependencies (`npm install -d`). Run `npm test`
+
+# Ideas Behind Bragi
 
 Some of the core concepts driving Bragi are:
 
@@ -159,7 +193,7 @@ Some of the core concepts driving Bragi are:
 * The logging library should itself not care what you do with the logs, but enable you to effortlessly do whatever you wish with them.
 
 
-### Usefulness of logging
+## Usefulness of logging
 
 [View an overview of how logging can be a powerful tool](http://vasir.net/blog/development/how-logging-made-me-a-better-developer).
 
@@ -171,3 +205,5 @@ Logging is a powerful and often underused tool. Like anything, there are tradeof
 * Helps you to maintain context of what your code is doing
 
 
+
+Happy logging!
