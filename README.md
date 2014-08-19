@@ -135,7 +135,11 @@ All transports take in, at a minimum, `groupsEnabled` and `groupsDisabled`. This
 
 To configure a transport that is already added to the logger, you can use `logger.transports.get("TransportName");`. Note that this returns an {Array} of transports (this is because you may have multiple transports of the same type - e.g., it's possible to have multiple File transports).
 
-To set properties, you can access a transport object individually (e.g., `logger.transports.get('Console')[0].PROPERTY = VALUE`) or you can set options for ALL returned transports by calling `.property( key, value )`. If only a key is passed in, it acts as getter (and returns an array of values). If key and value are passed in, it will set the property for *each* returned transports. NOTE: This is useful when you have a single transport, just be aware that if you use this on a file transport and change the output path, and you have multiple files transports, all file transports would log to that file.
+** `property( key, value )` **
+
+To set properties, you can access a transport object individually (e.g., `logger.transports.get('Console')[0].PROPERTY = VALUE`) or you can set options for ALL returned transports by calling `.property( key, value )`. 
+
+If only a key is passed in, it acts as getter (and returns an array of values). If key and value are passed in, it will set the property for *each* returned transports. NOTE: This is useful when you have a single transport, just be aware that if you use this on a file transport and change the output path, and you have multiple files transports, all file transports would log to that file.
 
 ### Console Transport - Configuration
 
