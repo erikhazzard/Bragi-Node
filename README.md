@@ -135,11 +135,18 @@ All transports take in, at a minimum, `groupsEnabled` and `groupsDisabled`. This
 
 To configure a transport that is already added to the logger, you can use `logger.transports.get("TransportName");`. Note that this returns an {Array} of transports (this is because you may have multiple transports of the same type - e.g., it's possible to have multiple File transports).
 
-**`property( key, value )`**
+### Setting properties 
+To set properties, you can:
 
-To set properties, you can access a transport object individually (e.g., `logger.transports.get('Console')[0].PROPERTY = VALUE`) or you can set options for ALL returned transports by calling `.property( key, value )`. 
+1. access a transport object individually (e.g., `logger.transports.get('console')[0].PROPERTY= VALUE`) or 
+2. set options for ALL returned transports by calling `.property( key, value )`. 
+
+For instance, to show the stack trace in the console output: `logger.transports.get('console').property('showStackTrace', true);`
 
 If only a key is passed in, it acts as getter (and returns an array of values). If key and value are passed in, it will set the property for *each* returned transports. NOTE: This is useful when you have a single transport, just be aware that if you use this on a file transport and change the output path, and you have multiple files transports, all file transports would log to that file.
+
+See `examples/example-simple.json` (or `test/test.js`) for example usage.
+
 
 ### Console Transport - Configuration
 
