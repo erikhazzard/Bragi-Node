@@ -32,6 +32,6 @@
   "homepage": "https://github.com/enoex/Bragi-Node",
   "directories": {
     "example": "examples",
-    "test": "test"
+    "test": "./node-modules/mocha/bin/mocha test"
   }
 }
