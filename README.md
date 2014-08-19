@@ -48,7 +48,7 @@ logger.log('userController:fetchInfo:ironman', 'fetching user information...');
 
 With group names, we're able to filter messages by groups and their namespaces, or by a regular expression (e.g., we have the ability to show ALL logs for the `ironman` user)
 
-## Log Gropus (log levels)
+## Log Groups (log levels)
 Unlike other libraries where log levels are linear, in Bragi log levels are discrete and arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});`. 
 
 By having arbitrary log levels, you can have fine grain control over what log messages are outputted. 
