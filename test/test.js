@@ -205,7 +205,7 @@ describe('Bragi: Javascript Logger', function(){
             assert( logger.transports.get('Console').property('showMeta')[0] === false );
         });
 
-        it('should add another transport and get and set properties', function(){
+        it('should add another transport and get and set properties with strings', function(){
             logger.transports.add(
                 new logger.transportClasses.Console({
                     showMeta: true, 
@@ -223,6 +223,35 @@ describe('Bragi: Javascript Logger', function(){
             logger.transports.get('Console').property('showMeta', false);
             assert( logger.transports.get('Console').property('showMeta')[0] === false );
             assert( logger.transports.get('Console').property('showMeta')[1] === false );
+
+        });
+
+
+        it('should add another transport and set properties with object', function(){
+            logger.transports.add(
+                new logger.transportClasses.Console({
+                    showMeta: true, 
+                    showStackTrace: false
+                })
+            );
+
+            assert( logger.transports.get('Console').property('showMeta')[0] === true );
+            assert( logger.transports.get('Console').property('showMeta')[1] === true );
+            assert( logger.transports.get('Console').property('showStackTrace')[0] === false );
+            assert( logger.transports.get('Console').property('showStackTrace')[1] === false );
+
+            // set
+            logger.transports.get('Console').property({ showMeta: false, showStackTrace: true });
+            assert( logger.transports.get('Console').property('showMeta')[0] === false );
+            assert( logger.transports.get('Console').property('showMeta')[1] === false );
+            assert( logger.transports.get('Console').property('showStackTrace')[0] === true );
+            assert( logger.transports.get('Console').property('showStackTrace')[1] === true );
+
+            // and set again with strings
+            logger.transports.get('Console').property('showStackTrace', false);
+            assert( logger.transports.get('Console').property('showStackTrace')[0] === false );
+            assert( logger.transports.get('Console').property('showStackTrace')[1] === false );
+
 
         });
     });
