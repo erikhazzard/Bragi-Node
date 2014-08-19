@@ -12,9 +12,10 @@
     "url": "https://github.com/enoex/Bragi-Node"
   },
   "keywords": [
+    "log",
     "logging",
     "utility",
-    "framework"
+    "tools"
   ],
   "license": "MIT",
   "dependencies": {},
