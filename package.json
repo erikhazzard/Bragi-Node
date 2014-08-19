@@ -7,6 +7,9 @@
     "test": "./node_modules/mocha/bin/mocha test -R dot"
   },
   "author": "Erik Hazzard <enoex1@gmail.com>",
+  "contributors": [
+    "Nils Schlomann <nils@five.com>" 
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/enoex/Bragi-Node"
