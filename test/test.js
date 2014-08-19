@@ -190,6 +190,44 @@ describe('Bragi: Javascript Logger', function(){
     });
 
     // ----------------------------------
+    // Transports - Tests
+    // ----------------------------------
+    describe('Transports - Functionality', function(){
+        it('should return transports when calling get()', function(){
+            // single console transport by default
+            assert(logger.transports.get('Console').length === 1);
+        });
+        it('should return correct array of property values', function(){
+            assert( logger.transports.get('Console').property('showMeta')[0] === true );
+        });
+        it('should set properties when property() called', function(){
+            logger.transports.get('Console').property('showMeta', false);
+            assert( logger.transports.get('Console').property('showMeta')[0] === false );
+        });
+
+        it('should add another transport and get and set properties', function(){
+            logger.transports.add(
+                new logger.transportClasses.Console({
+                    showMeta: true, 
+                    showStackTrace: false
+                })
+            );
+
+            // get 
+            assert( logger.transports.get('Console').length === 2 );
+            assert( logger.transports.get('Console').property('showMeta').length === 2 );
+            assert( logger.transports.get('Console').property('showMeta')[0] === true );
+            assert( logger.transports.get('Console').property('showMeta')[1] === true );
+
+            // set
+            logger.transports.get('Console').property('showMeta', false);
+            assert( logger.transports.get('Console').property('showMeta')[0] === false );
+            assert( logger.transports.get('Console').property('showMeta')[1] === false );
+
+        });
+    });
+
+    // ----------------------------------
     // Transports - History Tests
     // ----------------------------------
     describe('Transports - History tests', function(){
