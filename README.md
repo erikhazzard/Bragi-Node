@@ -18,27 +18,37 @@ This repository is for the NodeJS version of Bragi.
 
 Then, include it in your code: 
 
-    var logger = require('bragi');
+```javascript
+var logger = require('bragi');
+```
 
 Next, log something:
 
-    logger.log('groupname', 'Hello world');
+```javascript
+logger.log('groupname', 'Hello world');
+```
 
 Calls to `log` take in two required parameters: `groupName` and `message`. Any additional parameters (such as object info) will be included in the log message also. For instance:
     
-    logger.log('groupname', 'Here is some user info', { name: 'Ironman', weaknesses: null });
+```javascript
+logger.log('groupname', 'Here is some user info', { name: 'Ironman', weaknesses: null });
+```
 
 One of the benefits Bragi provides is the ability to supply arbitrary group names and namespace for groups (separated by a colon). For instance:
 
-    logger.log('userController:fetchInfo', 'fetching user information...');
+```javascript
+logger.log('userController:fetchInfo', 'fetching user information...');
+```
 
 Because the groupname is a string, you can dynamically create it:
     
-    logger.log('userController:fetchInfo:ironman', 'fetching user information...');
+```javascript
+logger.log('userController:fetchInfo:ironman', 'fetching user information...');
+```
 
 With group names, we're able to filter messages by groups and their namespaces, or by a regular expression (e.g., we have the ability to show ALL logs for the `ironman` user)
 
-## Log Gropus (log levels)
+## Log Groups (log levels)
 Unlike other libraries where log levels are linear, in Bragi log levels are discrete and arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});`. 
 
 By having arbitrary log levels, you can have fine grain control over what log messages are outputted. 
@@ -51,11 +61,15 @@ By having arbitrary log levels, you can have fine grain control over what log me
 
 **Examples**:
 
-    var logger = require('bragi');
+```javascript
+var logger = require('bragi');
+```
 
 Now, let's enable all `group1:subgroup1` logs and any log message that contains the user ironman, denoted by `:ironman`:
 
-    logger.options.groupsEnabled = [ 'group1:subgroup1', '.*:ironman' ]
+```javascript
+logger.options.groupsEnabled = [ 'group1:subgroup1', '.*:ironman' ]
+```
 
 The this would log all `group1:subgroup1` logs, including nested subgroups: for instance, `group1:subgroup1:subsubgroup1`. 
 
@@ -63,8 +77,10 @@ The this would log all `group1:subgroup1` logs, including nested subgroups: for 
 
 To specify a blacklist, use `groupsDisabled`. This would log everything *except* `group1`:
 
-    logger.options.groupsEnabled = true; 
-    logger.options.groupsDisabled = ['group1'];
+```javascript
+logger.options.groupsEnabled = true; 
+logger.options.groupsDisabled = ['group1'];
+```
 
 ### Built in log types
 Currently only two built in log types exist: `error` and `warn`. These types can also be namespaced (e.g., `error:group1:subgroup1` is valid). For error messages, the background will always be red and the foreground white. For warn messages, the background is yellow and foreground is white. The text will also blink. These are reserved colors, so anywhere a red background and white text exist you can immediately know an error has been logged.
@@ -99,28 +115,30 @@ NOTE: See `examples/example-json.js` to see what a loggedObject looks like.
 
 Here is what a simple transport definition looks like:
 
-    function MyTransport ( options ){
-        options = options || {};
+```javascript
+function MyTransport ( options ){
+    options = options || {};
 
-        // Transport must set groupsEnabled and groupsDisabled to provide transport 
-        // level support for overriding what groups to log
-        // (NOTE - the user does not need to pass in groupsEnabled, but the 
-        // transport must set these properties)
-        this.groupsEnabled = options.groupsEnabled;
-        this.groupsDisabled = options.groupsDisabled;
+    // Transport must set groupsEnabled and groupsDisabled to provide transport 
+    // level support for overriding what groups to log
+    // (NOTE - the user does not need to pass in groupsEnabled, but the 
+    // transport must set these properties)
+    this.groupsEnabled = options.groupsEnabled;
+    this.groupsDisabled = options.groupsDisabled;
 
-        // Transport specific settings
-        // ------------------------------
-        this.spacing = options.spacing === undefined ? 4 : options.spacing;
+    // Transport specific settings
+    // ------------------------------
+    this.spacing = options.spacing === undefined ? 4 : options.spacing;
 
-        return this;
-    }
+    return this;
+}
 
-    MyTransport.prototype.name = 'MyTransport';
-    MyTransport.prototype.log = function MyTransportLog( loggedObject ){
-        // Do something with loggedObject 
-        return this;
-    };
+MyTransport.prototype.name = 'MyTransport';
+MyTransport.prototype.log = function MyTransportLog( loggedObject ){
+    // Do something with loggedObject 
+    return this;
+};
+```
 
 
 See `lib/bragi/transports/ConsoleJSON` for a simple example of a working transport.
