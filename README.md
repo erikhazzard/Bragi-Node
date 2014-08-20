@@ -1,6 +1,5 @@
-![NPM version](https://badge.fury.io/js/bragi.svg)
-
 # Bragi : Javascript Logger - NodeJS 
+![NPM version](https://badge.fury.io/js/bragi.svg)
 
 ![Bragi](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-small.gif)
 
