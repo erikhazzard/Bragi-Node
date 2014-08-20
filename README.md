@@ -6,14 +6,14 @@
 
 Bragi is javascript logging library with colors, custom log levels, and server reporting functionality. Bragi allows you to write log messages that you can leave in your code, and allows you to specify what logs get output to the console.
 
-This repository is for the NodeJS version of Bragi. 
+This repository is for the NodeJS version of Bragi. The web browser version is coming soon
 
 ![Bragi](http://38.media.tumblr.com/tumblr_lcdao4PDgj1qbz35lo1_500.jpg)
 
 *Bragi is the Norse god of Poetry*
 
 # Installation and Usage
-[![NPM version](https://badge.fury.io/js/bragi-node.svg)]
+![NPM version](https://badge.fury.io/js/bragi.svg)
 
 `$ npm install bragi`
 
