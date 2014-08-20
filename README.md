@@ -1,3 +1,5 @@
+![NPM version](https://badge.fury.io/js/bragi.svg)
+
 # Bragi : Javascript Logger - NodeJS 
 
 ![Bragi](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-small.gif)
@@ -13,8 +15,6 @@ This repository is for the NodeJS version of Bragi. The web browser version is c
 *Bragi is the Norse god of Poetry*
 
 # Installation and Usage
-![NPM version](https://badge.fury.io/js/bragi.svg)
-
 `$ npm install bragi`
 
 Then, include it in your code: 
