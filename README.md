@@ -13,6 +13,7 @@ This repository is for the NodeJS version of Bragi.
 *Bragi is the Norse god of Poetry*
 
 # Installation and Usage
+[![NPM version](https://badge.fury.io/js/bragi-node.svg)]
 
 `$ npm install bragi`
 
