@@ -154,8 +154,10 @@ describe('Bragi: Javascript Logger', function(){
 
                 it('should test for /.*subgroup1/ (match anything that contains subgroup1)', function(){
                     logger.options.groupsEnabled = [/.*subgroup1/];
-                    logger.log('group1:subgroup1:subgroup2:subgroup3', 'logged'); 
-                    logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4', 'logged'); 
+                    logger.log('group1:subgroup1:subgroup2:subgroup3',
+                        'logged'); 
+                    logger.log('group1:subgroup1:subgroup2:subgroup3:subgroup4',
+                        'logged'); 
                     logger.log('blabla:innerbla:subgroup1', 'logged'); 
                     logger.log('blabla:group2:subgroup1', 'logged'); 
 
@@ -165,6 +167,74 @@ describe('Bragi: Javascript Logger', function(){
 
                     logs.length.should.equal(4);
                 });
+            });
+        });
+    });
+
+    // ----------------------------------
+    // Built in log tests
+    // ----------------------------------
+    describe('Built in log type tests', function(){
+        it('show always log error if not set in groupsDisabled', function(){
+            logger.options.groupsEnabled = ['group1'];
+            logger.log('error', 
+                'Should be logged, even if it is not present in groupsEnabled');
+            logger.log('error:group1', 
+                'Should be logged, even if it is not present in groupsEnabled');
+            logger.log('error:group2', 
+                'Should be logged, even if it is not present in groupsEnabled');
+            logger.log('group1', 'Should be logged');
+
+            logger.log('group2', 'Should not be logged');
+            logger.log('group3', 'Should not be logged');
+
+            logs.length.should.equal(4); 
+        });
+        it('show always log warn if not set in groupsDisabled', function(){
+            logger.options.groupsEnabled = ['group1'];
+            logger.log('warn', 
+                'Should be logged, even if it is not present in groupsEnabled');
+            logger.log('warn:group1', 
+                'Should be logged, even if it is not present in groupsEnabled');
+            logger.log('warn:group2', 
+                'Should be logged, even if it is not present in groupsEnabled');
+            logger.log('group1', 'Should be logged');
+
+            logger.log('group2', 'Should not be logged');
+            logger.log('group3', 'Should not be logged');
+
+            logs.length.should.equal(4); 
+        });
+
+        describe('Tests for built in types when set in groupsDisabled', function(){
+            it('should NOT log errors if set in groupsDisabled', function(){
+                logger.options.groupsEnabled = true;
+                logger.options.groupsDisabled = ['error'];
+                
+                logger.log('error', 'Should not be logged');
+                logger.log('error:group1', 'Should not be logged');
+                logger.log('error:group2', 'Should not be logged');
+
+                logger.log('group1', 'Should be logged');
+                // This should log, because the root namespace is group2, NOT 
+                // error - so it's not a built in type
+                logger.log('group2:error', 'Should be logged');
+
+                logs.length.should.equal(2); 
+            });
+
+            it('should NOT log warns if set in groupsDisabled', function(){
+                logger.options.groupsEnabled = true;
+                logger.options.groupsDisabled = ['warn'];
+                
+                logger.log('warn', 'Should not be logged');
+                logger.log('warn:group1', 'Should not be logged');
+                logger.log('warn:group2', 'Should not be logged');
+
+                logger.log('group1', 'Should be logged');
+                logger.log('group2:warn', 'Should be logged');
+
+                logs.length.should.equal(2); 
             });
         });
     });
@@ -316,7 +386,7 @@ describe('Bragi: Javascript Logger', function(){
             logger.log('h2only', 'this is also logged in history, but NOT logged to console');
             logger.log('h3only', 'this is also logged in history, but NOT logged to console');
 
-            assert(logs.length === 1);
+            logs.length.should.equal(1); 
             assert(history.history.h1only.length === 1);
             assert(history.history.h2only.length === 1);
             assert(history.history.h3only.length === 1);
