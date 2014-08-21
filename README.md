@@ -85,7 +85,7 @@ logger.options.groupsDisabled = ['group1'];
 ### Built in log types
 Currently only two built in log types exist: `error` and `warn`. These types can also be namespaced (e.g., `error:group1:subgroup1` is valid). For error messages, the background will always be red and the foreground white. For warn messages, the background is yellow and foreground is white. The text will also blink. These are reserved colors, so anywhere a red background and white text exist you can immediately know an error has been logged.
 
-Note that if you want to include these, you'll need to specify "error" and "warn" in the `groupsEnabled` array.
+Note that `errors` and `warn` logs will always be included unless explictly set in `groupsDisabled`.
 
 ### Examples
 ![Log example](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-still-small.png)
