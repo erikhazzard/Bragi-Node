@@ -1,4 +1,5 @@
 # Bragi : Javascript Logger - NodeJS 
+![NPM version](https://badge.fury.io/js/bragi.svg)
 
 ![Bragi](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-small.gif)
 
@@ -6,14 +7,13 @@
 
 Bragi is javascript logging library with colors, custom log levels, and server reporting functionality. Bragi allows you to write log messages that you can leave in your code, and allows you to specify what logs get output to the console.
 
-This repository is for the NodeJS version of Bragi. 
+This repository is for the NodeJS version of Bragi. The web browser version is coming soon
 
 ![Bragi](http://38.media.tumblr.com/tumblr_lcdao4PDgj1qbz35lo1_500.jpg)
 
 *Bragi is the Norse god of Poetry*
 
 # Installation and Usage
-
 `$ npm install bragi`
 
 Then, include it in your code: 
@@ -48,7 +48,7 @@ logger.log('userController:fetchInfo:ironman', 'fetching user information...');
 
 With group names, we're able to filter messages by groups and their namespaces, or by a regular expression (e.g., we have the ability to show ALL logs for the `ironman` user)
 
-## Log Gropus (log levels)
+## Log Groups (log levels)
 Unlike other libraries where log levels are linear, in Bragi log levels are discrete and arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});`. 
 
 By having arbitrary log levels, you can have fine grain control over what log messages are outputted. 
@@ -85,7 +85,7 @@ logger.options.groupsDisabled = ['group1'];
 ### Built in log types
 Currently only two built in log types exist: `error` and `warn`. These types can also be namespaced (e.g., `error:group1:subgroup1` is valid). For error messages, the background will always be red and the foreground white. For warn messages, the background is yellow and foreground is white. The text will also blink. These are reserved colors, so anywhere a red background and white text exist you can immediately know an error has been logged.
 
-Note that if you want to include these, you'll need to specify "error" and "warn" in the `groupsEnabled` array.
+Note that `errors` and `warn` logs will always be included unless explictly set in `groupsDisabled`.
 
 ### Examples
 ![Log example](http://s3.amazonaws.com/vasir-assets/bragi/bragi-log-still-small.png)
@@ -98,12 +98,60 @@ Bragi provides a couple utility functions to help you write logs messages that h
 
 * `logger.util.print( message, color )` : This is function takes in a message {String} and color {String} and returns the message string in the passed in color.
 
+# Configuration
+
+## Bragi config ##
+To configure bragi, require it then set the properties defined in the `options` object. For instance:
+
+```javascript
+var logger = require('bragi');
+logger.options.PROPERTY = VALUE;
+```
+
+The available options are:
+
+* `groupsEnabled`: An array of {Strings} or {RegExp} (regular expressions) specifying which groups to log - which messages will be sent to all available transports
+* `groupsDisabled`: An array of {Strings} or {RegExp} (regular expressions) specifying which groups to exclude from logs. This acts a blacklist, and will take priority over logs defined in `groupsEnabled`.
+* `storeStackTrace`: `false` by default. Will store the stack trace if set to `true`. This provides more info, but adds overhead. Very useful when in development, tradeoffs should be considered when in production
+
+
 # Output - Transports
+
 By default, Bragi uses the Console transport, which will log colored messages to the console.
 
-Currently, you can use `logger.transports.empty();` to remove all transports, and `logger.transports.add( new logger.transportClasses.Transport( {} ) )` (where Transport is a transport, found in `lib/bragi/transports/`).
+## Changing Transports
+
+Currently, you can use `logger.transports.empty();` to remove all transports.
+
+To add a transport, use `logger.transports.add( new logger.transportClasses.Transport( {} ) )` (where Transport is a transport, found in `lib/bragi/transports/`).
+
+Currently available transports are `Console`, `ConsoleJSON`, `History`, and `File`. Future transports include sending data to a remote host (e.g., Graylog).
 
 See `examples/example-json.js` for an example of removing the default transport and adding a new one.  
+
+## Configuring Transports
+
+All transports take in, at a minimum, `groupsEnabled` and `groupsDisabled`. This allows transport level configuration of what log messages to use. By default, they will use whatever is set on the global logger object. This is useful, for instance, if you want to send *all* logs to a remote host but only want to show error logs in the console output.
+
+To configure a transport that is already added to the logger, you can use `logger.transports.get("TransportName");`. Note that this returns an {Array} of transports (this is because you may have multiple transports of the same type - e.g., it's possible to have multiple File transports).
+
+### Setting properties 
+To set properties, you can:
+
+1. access a transport object individually (e.g., `logger.transports.get('console')[0].PROPERTY= VALUE`) or 
+2. set options for ALL returned transports by calling `.property( key, value )`. 
+
+For instance, to show the stack trace in the console output: `logger.transports.get('console').property('showStackTrace', true);`
+
+If only a key is passed in, it acts as getter (and returns an array of values). If key and value are passed in, it will set the property for *each* returned transports. NOTE: This is useful when you have a single transport, just be aware that if you use this on a file transport and change the output path, and you have multiple files transports, all file transports would log to that file.
+
+See `examples/example-simple.json` (or `test/test.js`) for example usage.
+
+
+### Console Transport - Configuration
+
+`showMeta`: {Boolean} `true` by default. Specifies whether to show the meta info (caller, time, etc.) as a new line after each message
+`showStackTrace`: {Boolean} `false` by default. If set to true, requires the logger's `storeStackTrace` to be set to {true}. Will print the stack trace for each log
 
 ## Writing Custom Transports
 
@@ -144,9 +192,10 @@ MyTransport.prototype.log = function MyTransportLog( loggedObject ){
 See `lib/bragi/transports/ConsoleJSON` for a simple example of a working transport.
 
 ## Running Tests
-Run `npm test`
 
-## Ideas Behind Bragi
+While Bragi itself has no dependencies, the tests depend on Mocha and Chai. Install dev dependencies (`npm install -d`). Run `npm test`
+
+# Ideas Behind Bragi
 
 Some of the core concepts driving Bragi are:
 
@@ -159,7 +208,7 @@ Some of the core concepts driving Bragi are:
 * The logging library should itself not care what you do with the logs, but enable you to effortlessly do whatever you wish with them.
 
 
-### Usefulness of logging
+## Usefulness of logging
 
 [View an overview of how logging can be a powerful tool](http://vasir.net/blog/development/how-logging-made-me-a-better-developer).
 
@@ -171,3 +220,5 @@ Logging is a powerful and often underused tool. Like anything, there are tradeof
 * Helps you to maintain context of what your code is doing
 
 
+
+Happy logging!

@@ -1,20 +1,24 @@
 {
   "name": "bragi",
-  "version": "0.0.4",
+  "version": "0.0.9",
   "description": "Javascript logging framework for NodeJS",
   "main": "lib/bragi.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test -R dot"
   },
   "author": "Erik Hazzard <enoex1@gmail.com>",
+  "contributors": [
+    "Nils Schlomann <nils@five.com>" 
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/enoex/Bragi-Node"
   },
   "keywords": [
+    "log",
     "logging",
     "utility",
-    "framework"
+    "tools"
   ],
   "license": "MIT",
   "dependencies": {},
@@ -28,6 +32,6 @@
   "homepage": "https://github.com/enoex/Bragi-Node",
   "directories": {
     "example": "examples",
-    "test": "test"
+    "test": "./node-modules/mocha/bin/mocha test"
   }
 }
