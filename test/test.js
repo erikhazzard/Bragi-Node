@@ -421,6 +421,11 @@ describe('Bragi: Javascript Logger', function(){
                 logger.addGroup('/test/');
                 logger.options.groupsEnabled.length.should.equal(1);
             });
+            it('should add multiple groups', function(){
+                logger.options.groupsEnabled.should.equal(true);
+                logger.addGroup('test1').addGroup('test2');
+                logger.options.groupsEnabled.length.should.equal(2);
+            });
             it('should add a regex and a string', function(){
                 logger.options.groupsEnabled.should.equal(true);
                 logger.addGroup('/test/');
@@ -458,6 +463,11 @@ describe('Bragi: Javascript Logger', function(){
             it('should remove all occurences of a group (regex)', function(){
                 logger.options.groupsEnabled = [/test/, 'test2', /test/];
                 logger.removeGroup(/test/);
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+            it('should remove multiple groups', function(){
+                logger.options.groupsEnabled = ['test1', 'test2', 'test3'];
+                logger.removeGroup('test1').removeGroup('test2');
                 logger.options.groupsEnabled.length.should.equal(1);
             });
             it('should not blow up when groups is empty', function(){

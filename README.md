@@ -28,7 +28,7 @@ Next, log something:
 logger.log('groupname', 'Hello world');
 ```
 
-Calls to `log` take in two required parameters: `groupName` and `message`. Any additional parameters (such as object info) will be included in the log message also. For instance:
+All log groups are enabled by default. Calls to `log` take in two required parameters: `groupName` and `message`. Any additional parameters (such as object info) will be included in the log message also. For instance:
     
 ```javascript
 logger.log('groupname', 'Here is some user info', { name: 'Ironman', weaknesses: null });
@@ -46,7 +46,7 @@ Because the groupname is a string, you can dynamically create it:
 logger.log('userController:fetchInfo:ironman', 'fetching user information...');
 ```
 
-With group names, we're able to filter messages by groups and their namespaces, or by a regular expression (e.g., we have the ability to show ALL logs for the `ironman` user)
+With group names, we're able to filter messages by groups and their namespaces, or by a regular expression (e.g., we have the ability to show ALL logs for the `ironman` user). By default, all groups are logged.
 
 ## Log Groups (log levels)
 Unlike other libraries where log levels are linear, in Bragi log levels are discrete and arbitrary. You can have nested log levels, e.g.: `logger.log("group1:subgroup1", "Log message %O", {key: 42});`. 
@@ -55,9 +55,16 @@ By having arbitrary log levels, you can have fine grain control over what log me
 
 ## Specifying what to log
 
-`groupsEnabled`: An {Array} of {String}s or {RegExp} regular expressions, specifying which groups can be logged. NOTE: Can also be a {Boolean} : if `true`, *everything* is logged; if `false`, nothing is logged
+`groupsEnabled`: An {Array} of {String}s or {RegExp} regular expressions, specifying which groups can be logged. NOTE: Can also be a {Boolean} : if `true`, *everything* is logged; if `false`, nothing is logged. Acts a whitelist.
 
-`groupsDisabled`: An {Array} of {String}s {RegExp} regular expressions, specifying which groups to exclude from logging. This is useful if you want to log everything *except* some particular groups.
+`groupsDisabled`: An {Array} of {String}s {RegExp} regular expressions, specifying which groups to exclude from logging. This is useful if you want to log everything *except* some particular groups. Acts as a blacklist.
+
+
+You can either access these arrays directly, or you can use `logger.addGroup( "groupName" );` (or `logger.addGroup( /groupRegex/ );` ) to add a group, and `logger.removeGroup( "groupName" );` (or `logger.addGroup( /groupRegex/ );` ) to remove a group from the groupsEnabled array.
+
+Note that the first call to `addGroup` will change the behavior of logging *everything* to logging only the group provided.  
+
+The `addGroup` and `removeGroup` functions return the logger object, and thus they can be chained: `logger.addGroup("group").addGroup("otherGroup");`
 
 **Examples**:
 
