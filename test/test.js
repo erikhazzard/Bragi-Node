@@ -395,6 +395,100 @@ describe('Bragi: Javascript Logger', function(){
     });
 
     // ----------------------------------
+    // Groups Enabled - add / remove
+    // ----------------------------------
+    describe('groupsEnabled add / remove', function(){
+        describe('addGroup', function(){
+            it('should add single text group', function(){
+                logger.options.groupsEnabled.should.equal(true);
+                logger.addGroup('test');
+                logger.options.groupsEnabled.length.should.equal(1);
+                logger.options.groupsEnabled[0].should.equal('test');
+            });
+
+            it('should add single regex group', function(){
+                logger.options.groupsEnabled.should.equal(true);
+                logger.addGroup('/test/');
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+
+            it('should add a single regex group if multiple are added', function(){
+                logger.options.groupsEnabled.should.equal(true);
+                logger.addGroup('/test/');
+                logger.addGroup('/test/');
+                logger.addGroup('/test/');
+                logger.addGroup('/test/');
+                logger.addGroup('/test/');
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+            it('should add multiple groups', function(){
+                logger.options.groupsEnabled.should.equal(true);
+                logger.addGroup('test1').addGroup('test2');
+                logger.options.groupsEnabled.length.should.equal(2);
+            });
+            it('should add a regex and a string', function(){
+                logger.options.groupsEnabled.should.equal(true);
+                logger.addGroup('/test/');
+                logger.addGroup('test');
+                logger.options.groupsEnabled.length.should.equal(2);
+            });
+            it('should not add if existing group exists', function(){
+                logger.options.groupsEnabled = ['test'];
+                logger.addGroup('test');
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+        });
+
+        describe('removeGroup', function(){
+            it('should remove a group', function(){
+                logger.options.groupsEnabled = ['test'];
+                logger.removeGroup('test');
+                logger.options.groupsEnabled.length.should.equal(0);
+            });
+            it('should remove a group and leave another one', function(){
+                logger.options.groupsEnabled = ['test', 'test2'];
+                logger.removeGroup('test');
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+            it('should remove all occurences of a group', function(){
+                logger.options.groupsEnabled = ['test', 'test2', 'test'];
+                logger.removeGroup('test');
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+            it('should remove a group (regex)', function(){
+                logger.options.groupsEnabled = [/test/];
+                logger.removeGroup(/test/);
+                logger.options.groupsEnabled.length.should.equal(0);
+            });
+            it('should remove all occurences of a group (regex)', function(){
+                logger.options.groupsEnabled = [/test/, 'test2', /test/];
+                logger.removeGroup(/test/);
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+            it('should remove multiple groups', function(){
+                logger.options.groupsEnabled = ['test1', 'test2', 'test3'];
+                logger.removeGroup('test1').removeGroup('test2');
+                logger.options.groupsEnabled.length.should.equal(1);
+            });
+            it('should not blow up when groups is empty', function(){
+                logger.options.groupsEnabled = [];
+                logger.removeGroup(/test/);
+                logger.options.groupsEnabled.length.should.equal(0);
+            });
+            it('should not blow up when groups is true', function(){
+                logger.options.groupsEnabled = true;
+                logger.removeGroup(/test/);
+                logger.options.groupsEnabled.length.should.equal(0);
+            });
+            it('should not blow up when groups is false', function(){
+                logger.options.groupsEnabled = false;
+                logger.removeGroup(/test/);
+                logger.options.groupsEnabled.length.should.equal(0);
+            });
+        });
+    });
+
+    // ----------------------------------
     // disabled group tests (blacklist)
     // ----------------------------------
     describe('History tests', function(){

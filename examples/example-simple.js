@@ -44,3 +44,12 @@ logger.log('group1:options', 'And I am logged with options set by an object');
 
 // reset properties
 logger.transports.get('Console').property({ showStackTrace: false, showMeta: true });
+
+// use addGroup
+logger.options.logLevel = [];
+logger.addGroup('test');
+logger.log('test', 'will log');
+logger.log('test', 'will NOT log');
+
+logger.removeGroup('test');
+logger.log('test', 'will NOT log');
