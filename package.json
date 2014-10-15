@@ -8,7 +8,7 @@
   },
   "author": "Erik Hazzard <enoex1@gmail.com>",
   "contributors": [
-    "Nils Schlomann <nils@five.com>" 
+    "Nils Schlomann <nils@five.com>"
   ],
   "repository": {
     "type": "git",
@@ -21,7 +21,9 @@
     "tools"
   ],
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "compress-buffer": "^1.2.2"
+  },
   "devDependencies": {
     "mocha": "*",
     "chai": "*"
