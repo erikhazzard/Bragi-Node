@@ -21,9 +21,7 @@
     "tools"
   ],
   "license": "MIT",
-  "dependencies": {
-    "compress-buffer": "^1.2.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "*",
     "chai": "*"
