@@ -142,6 +142,15 @@ All transports take in, at a minimum, `groupsEnabled` and `groupsDisabled`. This
 
 To configure a transport that is already added to the logger, you can use `logger.transports.get("TransportName");`. Note that this returns an {Array} of transports (this is because you may have multiple transports of the same type - e.g., it's possible to have multiple File transports).
 
+
+NOTE: The console transport supports batching, which batches logs to console. This can be a minor performance optimization; specifically, if you have output piped to a file this will greatly reduce disk I/O. See `example-simple.js` for examples on usage. For instance, to enable: 
+
+    logger.transports.get('Console').property({ 
+        showStackTrace: false, showMeta: true,
+        batchEnabled: true
+    });
+
+
 ### Setting properties 
 To set properties, you can:
 
