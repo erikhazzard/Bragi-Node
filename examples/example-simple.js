@@ -42,14 +42,28 @@ logger.transports.get('Console').property({
 logger.log('group1:options', 'And I am logged with options set by an object');
 
 
-// reset properties
-logger.transports.get('Console').property({ showStackTrace: false, showMeta: true });
+// reset properties and test batchEnabled
+logger.transports.get('Console').property({ 
+    showStackTrace: false, showMeta: true,
+    // test batching (will wait 100ms between outputting to console)
+    batchEnabled: true
+});
 
 // use addGroup
 logger.options.logLevel = [];
 logger.addGroup('test');
+logger.log('test', '0 will log');
 logger.log('test', 'will log');
-logger.log('test', 'will NOT log');
+logger.log('test', 'will log');
+logger.log('test', 'will log');
+logger.log('test', 'will log');
+logger.log('test', 'will log');
+logger.log('test', 'will log');
+logger.log('test', 'will log');
 
-logger.removeGroup('test');
-logger.log('test', 'will NOT log');
+setTimeout(function(){
+    logger.log('test', '0 will log');
+    logger.log('test', '1 will log');
+    logger.log('test', '2 will log');
+    logger.log('test', '3 will log');
+}, 90);
