@@ -163,6 +163,19 @@ If only a key is passed in, it acts as getter (and returns an array of values). 
 
 See `examples/example-simple.json` (or `test/test.js`) for example usage.
 
+## Formatting - Messages
+If you call bragi without using a %j or %s or %s formatting string, any additional arguments pass the first will not be logged. However, they will be added to the internal data object and can be used by transports. This is useful if you have a lot of data you want to pipe to Graylog, for instance, but don't want to show up in the console log itself. For example:
+
+```
+    logger.log("group1", "Hello there", {note: "this won't be logged"});
+```
+
+To show the data in the log message, just pass in '%j':
+
+```
+    logger.log("group1", "Hello there %j", {note: "this WILL be logged"});
+```
+
 
 ### Console Transport - Configuration
 
