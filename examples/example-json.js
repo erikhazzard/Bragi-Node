@@ -24,7 +24,9 @@ logger.log('group1', 'Hello %j', "world");
 logger.log('group1', 'Hello %j', [1,2,3]);
 logger.log(
     'group1', 
-    logger.util.print('Hello %j :::::::: ', 'green'), 
+    logger.util.print('Hello ', 'green') + 
+    logger.util.print('blue ', 'blue') +
+    logger.util.print('red ', 'red') + ' %j', 
     {name: 'world', size: 'big', props: {answer: 42}},
     {name: 'world', size: 'big', props: {answer: 42}}
 );
