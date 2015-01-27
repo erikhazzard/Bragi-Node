@@ -1,6 +1,6 @@
 {
   "name": "bragi",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Javascript logging framework for NodeJS",
   "main": "lib/bragi.js",
   "scripts": {
