@@ -22,7 +22,10 @@ logger.transports.add(new logger.transportClasses.Graylog({
     port: 12202,
     additionalOptions: {
         // options to send for every requst
-    }
+    },
+
+    // NOTE: we can also enable specific groups as to not clog network
+    groupsEnabled: []
 }));
 
 // NOTE: IP address needs to be resolved
