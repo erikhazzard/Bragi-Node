@@ -24,6 +24,7 @@ logger.options.storeStackTrace= true;
 function logIt(){
     // Note: these logs will show calling function name as it's a named function
     logger.log('group1', 'Hi');
+    logger.log('group1', {test:42});
     logger.log('group1', 'Hi : %j : %j', { key: 42}, { k: 1 });
     logger.log('group1', 'SINGLE OBJECT: %j', { key: 42}, { notLogged: true });
 }
