@@ -1,6 +1,6 @@
 {
   "name": "bragi",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Javascript logging framework for NodeJS",
   "main": "lib/bragi.js",
   "scripts": {
@@ -8,7 +8,8 @@
   },
   "author": "Erik Hazzard <enoex1@gmail.com>",
   "contributors": [
-    "Nils Schlomann <nils@five.com>" 
+    "Nils Schlomann <nils@five.com>" ,
+    "necccc <https://github.com/necccc>"
   ],
   "repository": {
     "type": "git",
