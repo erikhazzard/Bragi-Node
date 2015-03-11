@@ -19,6 +19,7 @@ logger.log(
     {name: 'world', size: 'big', props: {answer: 42}},
     {name: 'world', size: 'big', props: {answer: 42}}
 );
+
 // turn back on meta info
 logger.transports.get('Console').property('showMeta', true);
 
@@ -67,3 +68,5 @@ setTimeout(function(){
     logger.log('test', '2 will log');
     logger.log('test', '3 will log');
 }, 90);
+
+logger.log('test', 'test for %j | should be 42: <%j> ', undefined, 42);

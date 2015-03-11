@@ -67,6 +67,12 @@ describe('Bragi: Javascript Logger', function(){
                 logger.log('group2', 'hello'); 
                 logger.log('group3', 'hello'); 
                 logs.length.should.equal(3);
+
+                // should log undefined
+                logger.log('group', 'should be :%j: and :%j:', undefined, 42);
+                assert(logs[logs.length-1][0].match(/:undefined:/));
+                assert(logs[logs.length-1][0].match(/:42:/));
+
             });
         });
 
