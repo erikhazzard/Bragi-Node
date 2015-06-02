@@ -6,7 +6,6 @@
  * ========================================================================= */
 var logger = require('../lib/bragi');
 
-
 logger.log('group1:subgroup1', 'Hello %j', "world");
 logger.log('group1:subgroup1', 'Hello %j', [1,2,3]);
 
@@ -17,7 +16,7 @@ logger.log(
     'group1', 
     logger.util.print('Hello', 'green') + ' Not showing meta. Props: %j ::::::', 
     {name: 'world', size: 'big', props: {answer: 42}},
-    {name: 'world', size: 'big', props: {answer: 42}}
+    {name: 'world', second: true, size: 'big', props: {answer: 42}}
 );
 
 // turn back on meta info
@@ -67,6 +66,18 @@ setTimeout(function(){
     logger.log('test', '1 will log');
     logger.log('test', '2 will log');
     logger.log('test', '3 will log');
+
+    // Final
+    logger.log('test:params', 'will show params', { world: true }, {second: true}, {third: true});
+
+    // If hideUnformattedParams is true, do NOT log additional pass params
+    logger.options.hideUnformattedParameters = true;
+    logger.log('test:params', 'will NOT show params other than this one: %j', { world: true }, {second: true}, {third: true});
+
+    // the option can be changed on the fly
+    logger.options.hideUnformattedParameters = false;
+    logger.log('test:params', 'will show params', { world: true }, {second: true}, {third: true});
+
 }, 90);
 
 logger.log('test', 'test for %j | should be 42: <%j> ', undefined, 42);
