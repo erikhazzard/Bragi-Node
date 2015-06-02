@@ -7,7 +7,7 @@
 
 Bragi is javascript logging library with colors, custom log levels, and server reporting functionality. Bragi allows you to write log messages that you can leave in your code, and allows you to specify what logs get output to the console.
 
-This repository is for the NodeJS version of Bragi. The web browser version is coming soon
+This repository is for the NodeJS version of Bragi. You can also [check out the browser version](https://github.com/enoex/Bragi-Browser).
 
 ![Bragi](http://38.media.tumblr.com/tumblr_lcdao4PDgj1qbz35lo1_500.jpg)
 
@@ -108,6 +108,8 @@ Bragi provides a couple utility functions to help you write logs messages that h
 # Configuration
 
 ## Bragi config ##
+Bragi has two configuration levels - Bragi-wide config, and Transport level config. 
+
 To configure bragi, require it then set the properties defined in the `options` object. For instance:
 
 ```javascript
@@ -120,6 +122,7 @@ The available options are:
 * `groupsEnabled`: An array of {Strings} or {RegExp} (regular expressions) specifying which groups to log - which messages will be sent to all available transports
 * `groupsDisabled`: An array of {Strings} or {RegExp} (regular expressions) specifying which groups to exclude from logs. This acts a blacklist, and will take priority over logs defined in `groupsEnabled`.
 * `storeStackTrace`: `false` by default. Will store the stack trace if set to `true`. This provides more info, but adds overhead. Very useful when in development, tradeoffs should be considered when in production
+* `hideUnformattedParameters`: `false` by default. Will NOT include additional params in the message string if this is set to true. If set to false, all additional objects will be embedded in the message string. For instance, by default, `logger.log('group', 'message', {a:1})` will result in the string `"group:message {a:1}"`. Additional objects will always be included in the log data object and accessible in the transports, but you may not always want to show additional objects in generated message strings. If this option is set to `true`, you must include the formatter (e.g., "%j") inside your string to get additional objects to be displayed in the string. For example: `logger.log('group', 'message: %j', {key: 'val'})` will generate message string `"group:message: {key: 'val'}"`. If you do NOT include a %j or other formatter, the additional objects will not be embedded in your string. This is positional, so you can do things like `logger.log('group', 'only include first two: %j %j', {a:1}, {b:1}, {c:1});`. In this example, he first two objects (`{a:1}` and `{b:1}`) will be included in the message string, but `{c:1}` will NOT - however, that object will be stored in the log data and can be accessed by any transport
 
 
 # Output - Transports
