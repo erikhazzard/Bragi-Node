@@ -25,7 +25,8 @@ logger.transports.get('Console').property('showMeta', true);
 // Now show the full stack trace ( set on the Console transport )
 logger.transports.get('Console').property('showStackTrace', true);
 
-logger.log('group1', 'Hello %j', "world");
+logger.log('group1', 'Hello %j', 'world');
+logger.log('group1'); // empty log call
 
 // Turn off stack trace
 logger.transports.get('Console').property('showStackTrace', false);

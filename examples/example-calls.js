@@ -50,6 +50,7 @@ setTimeout(function intialTimeout(){
     // Set log level (specifying which logs to show
     logger.options.groupsEnabled = ['group1'];
     logger.log('group1', 'Shown');
+    logger.log('group1'); // no message 
     logger.log('group2', 'Not shown');
 
     // Set log level - sub groups
