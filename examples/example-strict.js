@@ -1,10 +1,10 @@
+"use strict";
 /* =========================================================================
  *
  * example-strict.js
  *      This example uses strict mode 
  *  
  * ========================================================================= */
-"use strict";
 
 var logger = require('../lib/bragi');
 
