@@ -403,6 +403,75 @@ describe('Bragi: Javascript Logger', function(){
     // ----------------------------------
     // Groups Enabled - add / remove
     // ----------------------------------
+    describe('Whitelist', function(){
+        it('should test whitelist', function(){
+            var history = new logger.transportClasses.History({
+                storeEverything: true
+            });
+            logger.transports.add(history);
+            logger.options.keyWhitelist = {
+                name: true,
+            };
+            logger.log('group1', 'test', {
+                name: 'test',
+                password: 'notlogged',
+
+                // NOT logged since innerObject is not a whitelisted key
+                innerObject: {
+                    name: 'notlogged',
+                    innerInner: {
+                        name: 'alsonotlogged',
+                    },
+                    key: 'value',
+                }
+            });
+
+            history.history.group1[0].properties.name.should.equal('test');
+            assert(history.history.group1[0].properties.password === undefined);
+            assert(history.history.group1[0].properties.innerObject === undefined);
+        });
+    });
+
+    describe('Blacklist', function () {
+        it('should test whitelist', function(){
+            var history = new logger.transportClasses.History({
+                storeEverything: true
+            });
+            logger.transports.add(history);
+            logger.options.keyWhitelist = true;
+            logger.options.keyBlacklist = {
+                password: true,
+            }
+            logger.log('group1', 'test', {
+                name: 'test',
+                password: 'notlogged',
+
+                // NOT logged since innerObject is not a whitelisted key
+                innerObject: {
+                    name: 'notlogged',
+                    password: 'notLogged',
+                    innerInner: {
+                        name: 'alsonotlogged',
+                        password: 'notLogged',
+                    },
+                    key: 'value',
+                }
+            });
+
+            history.history.group1[0].properties.name.should.equal('test');
+            assert(history.history.group1[0].properties.password === undefined);
+            assert(history.history.group1[0].properties.innerObject.password === undefined);
+            history.history.group1[0].properties.innerObject
+                .name.should.equal('notlogged');
+            history.history.group1[0].properties.innerObject.innerInner
+                .name.should.equal('alsonotlogged');
+            assert(history.history.group1[0].properties.innerObject.innerInner.password === undefined);
+        });
+    });
+
+    // ----------------------------------
+    // Groups Enabled - add / remove
+    // ----------------------------------
     describe('groupsEnabled add / remove', function(){
         describe('addGroup', function(){
             it('should add single text group', function(){
