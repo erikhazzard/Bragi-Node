@@ -427,8 +427,10 @@ describe('Bragi: Javascript Logger', function(){
             });
 
             history.history.group1[0].properties.name.should.equal('test');
-            assert(history.history.group1[0].properties.password === undefined);
-            assert(history.history.group1[0].properties.innerObject === undefined);
+            history.history.group1[0].properties.password
+                .should.equal(logger.options.hiddenFieldValue);
+            history.history.group1[0].properties.innerObject
+                .should.equal(logger.options.hiddenFieldValue);
         });
     });
 
@@ -438,34 +440,60 @@ describe('Bragi: Javascript Logger', function(){
                 storeEverything: true
             });
             logger.transports.add(history);
+
+            // log everything EXCEPT blacklist
             logger.options.keyWhitelist = true;
             logger.options.keyBlacklist = {
                 password: true,
-            }
+            };
+
             logger.log('group1', 'test', {
                 name: 'test',
                 password: 'notlogged',
 
-                // NOT logged since innerObject is not a whitelisted key
                 innerObject: {
-                    name: 'notlogged',
+                    name: 'logged',
                     password: 'notLogged',
+                    // some invalid tests
+                    null: null,
+                    undefined: null,
+                    'undefined': true,
+                    0: null,
                     innerInner: {
-                        name: 'alsonotlogged',
+                        name: 'logged',
                         password: 'notLogged',
+
+                        inner: {
+                            depth: 4,
+                            inner: {
+                                depth: 4,
+                                inner: {
+                                    depth: 5,
+                                    inner: {
+                                        depth: 6,
+                                        inner: {
+                                            password: 'notlogged',
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     key: 'value',
                 }
             });
 
             history.history.group1[0].properties.name.should.equal('test');
-            assert(history.history.group1[0].properties.password === undefined);
-            assert(history.history.group1[0].properties.innerObject.password === undefined);
+            history.history.group1[0].properties.password
+                .should.equal(logger.options.hiddenFieldValue);
+            history.history.group1[0].properties.innerObject.password
+                .should.equal(logger.options.hiddenFieldValue);
             history.history.group1[0].properties.innerObject
-                .name.should.equal('notlogged');
+                .name.should.equal('logged');
             history.history.group1[0].properties.innerObject.innerInner
-                .name.should.equal('alsonotlogged');
-            assert(history.history.group1[0].properties.innerObject.innerInner.password === undefined);
+                .name.should.equal('logged');
+            history.history.group1[0].properties.innerObject.innerInner
+                .password.should.equal(logger.options.hiddenFieldValue);
         });
     });
 

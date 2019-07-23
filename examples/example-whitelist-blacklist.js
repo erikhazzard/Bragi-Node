@@ -58,10 +58,16 @@ logger.log('group2:subgroup1', 'Hello %j', {
     someArray: [ 'test', ],
     someArray2: [ { test: 42, }, ],
     invalidObj: { 'test': null, 'testundef': undefined, 'test0': 0, },
+    null: null,
+    undefined: undefined,
+    0: 1,
     email: 'tester@test.com',
     notLogged: {
         id: 'nonono',
         name: 'neverlogged',
+        null: null,
+        undefined: undefined,
+        0: 1,
     },
     headers: {
         name: 'test',
