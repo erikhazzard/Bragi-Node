@@ -55,6 +55,9 @@ logger.log('group2:subgroup1', 'Hello %j', {
     id: '1234567',
     creditCard: '1234',
     password: '*****',
+    someArray: [ 'test', ],
+    someArray2: [ { test: 42, }, ],
+    invalidObj: { 'test': null, 'testundef': undefined, 'test0': 0, },
     email: 'tester@test.com',
     notLogged: {
         id: 'nonono',
