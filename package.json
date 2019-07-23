@@ -22,7 +22,9 @@
     "tools"
   ],
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
   "devDependencies": {
     "mocha": "*",
     "chai": "*"
